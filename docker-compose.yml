@@ -1,0 +1,163 @@
+version: "3"
+
+services:
+
+  Eureka:
+    build: D:\4 TWIN\Applications Web Distribuées\Gestion d'un cabinet médical\eureka
+    ports:
+      - "8761:8761"
+    hostname: eureka
+    image: "eureka"
+    environment:
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka:8761/eureka/
+    networks:
+      - mynetwork
+
+  Gateway:
+    build: D:\4 TWIN\Applications Web Distribuées\Gestion d'un cabinet médical\Gateway
+    ports:
+      - "9090:9090"
+    hostname: gateway
+    image: "gateway"
+    environment:
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka:8761/eureka/
+    depends_on:
+      - Eureka
+    networks:
+      - mynetwork
+
+  keycloak:
+    image: quay.io/keycloak/keycloak:22.0.1
+    container_name: keycloak-server
+    volumes:
+      - ./keycloak-server/realm-export.json:/opt/keycloak/data/import/realm-export.json
+    environment:
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+      DB_VENDOR: MYSQL
+      DB_ADDR: docker-mysql_keycloak
+      DB_DATABASE: keycloak
+      DB_USER: keycloak
+      DB_PASSWORD: keycloak
+    ports:
+      - "8080:8080"
+    command: -v start-dev --import-realm
+    depends_on:
+      - docker-mysql_keycloak
+    networks:
+      - mynetwork
+
+  docker-mysql_keycloak:
+    image: "mysql:5.6"
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=keycloak
+      - MYSQL_USER=keycloak
+      - MYSQL_PASSWORD=keycloak
+    ports:
+      - "3311:3306"
+    networks:
+      - mynetwork
+
+  Cabinet:
+    build: D:\4 TWIN\Applications Web Distribuées\Gestion d'un cabinet médical\Cabinet
+    ports:
+      - "8060:8060"
+    hostname: cabinet
+    image: "cabinet"
+    environment:
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka:8761/eureka/
+      - SPRING_DATASOURCE_URL=jdbc:mysql://docker-mysql_1:3306/gestionCabinet?autoReconnect=true&useSSL=false
+    depends_on:
+      - docker-mysql_1
+      - Eureka
+    networks:
+      - mynetwork
+
+  Article:
+    build: D:\4 TWIN\Applications Web Distribuées\Gestion d'un cabinet médical\Article
+    ports:
+      - "8061:8061"
+    hostname: article
+    image: "article"
+    environment:
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka:8761/eureka/
+      - SPRING_DATASOURCE_URL=jdbc:mysql://docker-mysql_2:3306/gestionArticle?autoReconnect=true&useSSL=false
+    depends_on:
+      - docker-mysql_2
+      - Eureka
+    networks:
+      - mynetwork
+  
+  RendezVous:
+    build: D:\4 TWIN\Applications Web Distribuées\Gestion d'un cabinet médical\RendezVous
+    ports:
+      - "8070:8070"
+    hostname: rendezvous
+    image: "rendezvous"
+    environment:
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka:8761/eureka/
+      - SPRING_DATASOURCE_URL=jdbc:mysql://docker-mysql_3:3306/gestionRendezVous?autoReconnect=true&useSSL=false
+    depends_on:
+      - docker-mysql_3
+      - Eureka
+    networks:
+      - mynetwork
+
+  ServiceMedical:
+    build: D:\4 TWIN\Applications Web Distribuées\Gestion d'un cabinet médical\ServiceMedical
+    ports:
+      - "8071:8071"
+    hostname: servicemedical
+    image: "servicemedical"
+    environment:
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka:8761/eureka/
+      - SPRING_DATASOURCE_URL=jdbc:mysql://docker-mysql_4:3306/gestionServiceMedical?autoReconnect=true&useSSL=false
+    depends_on:
+      - docker-mysql_4
+      - Eureka
+    networks:
+      - mynetwork
+
+  docker-mysql_1:
+    image: "mysql:5.6"
+    environment:
+      - MYSQL_ALLOW_EMPTY_PASSWORD=1
+      - MYSQL_DATABASE=gestionCabinet
+    ports:
+      - 3307:3306
+    networks:
+      - mynetwork
+
+  docker-mysql_2:
+    image: "mysql:5.6"
+    environment:
+      - MYSQL_ALLOW_EMPTY_PASSWORD=1
+      - MYSQL_DATABASE=gestionArticle
+    ports:
+      - 3308:3306
+    networks:
+      - mynetwork
+
+  docker-mysql_3:
+    image: "mysql:5.6"
+    environment:
+      - MYSQL_ALLOW_EMPTY_PASSWORD=1
+      - MYSQL_DATABASE=gestionRendezVous
+    ports:
+      - 3309:3306
+    networks:
+      - mynetwork
+
+  docker-mysql_4:
+    image: "mysql:5.6"
+    environment:
+      - MYSQL_ALLOW_EMPTY_PASSWORD=1
+      - MYSQL_DATABASE=gestionServiceMedical
+    ports:
+      - 3310:3306
+    networks:
+      - mynetwork
+
+networks:
+  mynetwork: {}

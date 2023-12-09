@@ -1,0 +1,4 @@
+FROM openjdk:11
+EXPOSE 8060
+ADD target/Cabinet-0.0.1-SNAPSHOT.jar Cabinet.jar
+ENTRYPOINT ["java","-jar","Cabinet.jar"]

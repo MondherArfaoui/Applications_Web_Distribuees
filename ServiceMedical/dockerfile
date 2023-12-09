@@ -1,0 +1,4 @@
+FROM openjdk:11
+EXPOSE 8071
+ADD target/ServiceMedical-0.0.1-SNAPSHOT.jar ServiceMedical.jar
+ENTRYPOINT ["java","-jar","ServiceMedical.jar"]
