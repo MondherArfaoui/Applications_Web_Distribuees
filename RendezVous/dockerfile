@@ -1,4 +1,0 @@
-FROM openjdk:11
-EXPOSE 8070
-ADD target/RendezVous-0.0.1-SNAPSHOT.jar RendezVous.jar
-ENTRYPOINT ["java","-jar","RendezVous.jar"]

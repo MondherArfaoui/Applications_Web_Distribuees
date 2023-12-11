@@ -1,4 +1,0 @@
-FROM openjdk:11
-EXPOSE 8061
-ADD target/Article-0.0.1-SNAPSHOT.jar Article.jar
-ENTRYPOINT ["java","-jar","Article.jar"]

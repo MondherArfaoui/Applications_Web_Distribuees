@@ -8,7 +8,6 @@ import tn.esprit.article.services.ArticleServices;
 import java.util.List;
 
 @RestController
-@CrossOrigin("*")
 @RequestMapping("/articles")
 public class ArticleRestAPI {
 
