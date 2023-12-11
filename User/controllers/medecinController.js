@@ -149,5 +149,20 @@ module.exports = {
             res.status(400).json({ success: false, message: "Error: " + error, data: null });
         }
     },
+    getByMatricule: async (req, res) => {
+        try {
+            const { matricule } = req.params;
+
+            const cust = await medecinModel.findOne(matricule);
+            
+            if (!cust) {
+                return res.status(404).json({ success: false, message: "Medecin not found", data: null });
+            }
+
+            res.status(200).json({ success: true, message: "Success", data: cust });
+        } catch (error) {
+            res.status(400).json({ success: false, message: "Error: " + error, data: null });
+        }
+    },
     
 }

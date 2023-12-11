@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { Link } from 'react-router-dom';
 
 const ListArticleMedecin = () => {
   const [articles, setArticles] = useState([]);
@@ -44,14 +45,14 @@ const ListArticleMedecin = () => {
             </h3>
           </div>
           <div className=" col-sm-2 align-items-center mt-2 mt-md-0">
-            <a
+            <Link to="addArticle"
               href="#"
               className="btn btn-sm btn-primary mb-0"
               data-bs-toggle="modal"
               data-bs-target="#addQuiz"
             >
               Ajouter article
-            </a>
+            </Link>
           </div>
         </div>
       </div>
@@ -61,35 +62,19 @@ const ListArticleMedecin = () => {
         {articles && articles.length > 0 ? (
           articles.map((article, index) => (
             <div className="d-sm-flex" key={article.id || index}>
-              <img
-                className="avatar avatar-lg rounded-circle float-start me-3"
-                src={`http://localhost:3000/getImage/${article.image}`}
-                alt="avatar"
-              />
               <div>
-                <div className="mb-3 d-sm-flex justify-content-sm-between align-items-center">
-                  <h5 className="m-0">
-                    {article.nom} {article.prenom}
-                  </h5>
-                  <span className="me-3 small">{article.datePublication}</span>
-                </div>
+                
                 <h6>{article.titre}</h6>
                 <p>{article.description}</p>
+                <div className="mb-3 d-sm-flex justify-content-sm-between align-items-center">
+                  <span className="me-3 small">Date d'ajout: {article.datePublication}</span>
+                </div>
                 <div className="text-end">
                   <button
                     onClick={() => handleDelete(article.id)}
                     className="btn btn-sm btn-primary-soft mb-1 mb-sm-0"
                   >
                     Delete
-                  </button>
-                  <button
-                    className="btn btn-sm btn-light mb-0"
-                    data-bs-toggle="collapse"
-                    href="#collapseComment"
-                    aria-expanded="false"
-                    aria-controls="collapseComment"
-                  >
-                    Reply
                   </button>
                 </div>
               </div>

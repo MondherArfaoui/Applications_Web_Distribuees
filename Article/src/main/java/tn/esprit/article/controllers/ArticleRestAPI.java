@@ -8,15 +8,15 @@ import tn.esprit.article.services.ArticleServices;
 import java.util.List;
 
 @RestController
-@CrossOrigin("*")
+@CrossOrigin(origins = "http://localhost:3001")
 @RequestMapping("/articles")
 public class ArticleRestAPI {
 
     @Autowired
     private ArticleServices articleService;
 
-    @PostMapping("/add")
-    public Article addArticle(@RequestBody Article article, @RequestParam String matriculeMedecin) {
+    @PostMapping("/add/{matriculeMedecin}")
+    public Article addArticle(@RequestBody Article article, @PathVariable String matriculeMedecin) {
         return articleService.saveArticle(article, matriculeMedecin);
     }
 

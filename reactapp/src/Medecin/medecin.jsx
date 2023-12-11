@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Outlet } from 'react-router-dom'
+import { Link } from 'react-router-dom';
 
 const MedecinHome = () => {
     const [user, setUser] = useState({});
@@ -170,8 +171,8 @@ Page content START */}
                 <div className="bg-dark border rounded-3 pb-0 p-3 w-100">
                   {/* Dashboard menu */}
                   <div className="list-group list-group-dark list-group-borderless">
-                    <a className="list-group-item"><i className="fas fa-address-card fa-fw me-2" />Editer le profil</a>
-                    <a className="list-group-item"><i className="fas fa-city fa-fw me-2" />Infos université et foyer</a>
+                    <Link to="listArticle" className="list-group-item">Mes Articles</Link>
+                    <Link to="listAllArticle" className="list-group-item">Liste de tous les articles</Link>
                     <a className="list-group-item"><i className="fas fa-window-restore fa-fw me-2" />Réservations</a>
                     <a className="list-group-item text-danger bg-danger-soft-hover" ><i className="fas fa-sign-out-alt fa-fw me-2" />Se déconnecter</a>
                   </div>

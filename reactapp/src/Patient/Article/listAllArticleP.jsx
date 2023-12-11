@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from 'react-router-dom';
 
-const ListAllArticle = () => {
+const ListAllArticleP = () => {
   const [articles, setArticles] = useState([]);
 
   useEffect(() => {
@@ -32,16 +32,6 @@ const ListAllArticle = () => {
               Liste des articles médicales
             </h3>
           </div>
-          <div className=" col-sm-2 align-items-center mt-2 mt-md-0">
-            <Link to="addArticle"
-              href="#"
-              className="btn btn-sm btn-primary mb-0"
-              data-bs-toggle="modal"
-              data-bs-target="#addQuiz"
-            >
-              Ajouter article
-            </Link>
-          </div>
         </div>
       </div>
       {/* Header END */}
@@ -68,4 +58,4 @@ const ListAllArticle = () => {
   );
 };
 
-export default ListAllArticle;
+export default ListAllArticleP;

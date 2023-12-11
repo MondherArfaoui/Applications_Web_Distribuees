@@ -6,6 +6,9 @@ import LogupPatient from './Home/logupPatient/logupPatient';
 import MedecinHome from './Medecin/medecin';
 import PatientHome from './Patient/patient';
 import ListArticleMedecin from './Medecin/Article/listArticleMedecin';
+import ListAllArticle from './Medecin/Article/listAllArticle';
+import AddArticle from './Medecin/Article/addArticle';
+import ListAllArticleP from './Patient/Article/listAllArticleP';
 
 function App() {
   return (
@@ -15,10 +18,12 @@ function App() {
         <Route path="/logupMedecin" element={<LogupMedecin />} />
         <Route path="/logupPatient" element={<LogupPatient />} />
         <Route path="/medecin" element={<MedecinHome />}>
+          <Route path="addArticle" element={<AddArticle />} />
           <Route path="listArticle" element={<ListArticleMedecin />} />
+          <Route path="listAllArticle" element={<ListAllArticle />} />
         </Route>
         <Route path="/patient" element={<PatientHome />}>
-          {/* <Route path="Shop" element={<Shop />} /> */}
+          <Route path="listAllArticle" element={<ListAllArticleP />} />
         </Route>
       </Routes>
     </Router>
